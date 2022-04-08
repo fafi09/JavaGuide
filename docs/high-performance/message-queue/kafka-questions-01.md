@@ -218,5 +218,27 @@ acks 的默认值即为1，代表我们的消息被leader副本接收之后就�
 
 ### Reference
 
-- Kafka 官方文档： https://kafka.apache.org/documentation/
-- 极客时间—《Kafka核心技术与实战》第11节：无消息丢失配置怎么实现？
+1. Kafka 官方文档： https://kafka.apache.org/documentation/
+2. 极客时间—《Kafka核心技术与实战》第11节：无消息丢失配置怎么实现？
+
+### kafka环境搭建问题
+
+1. #### 在一个broker环境下创建多个副本的主题，会报如下错误
+
+   - 无可采用的broker
+
+### kafka生产者
+
+1. 一个topic下多个分区，每个分区有主和副本
+
+2. 生产者的分区策略
+
+   - 指定分区的，按分区发送
+
+   - 没有指定分区，但是有key值，按照key的hash值对分区数取余数得到分区
+
+   - 又没有指定分区，又无key，则采用粘性分区策略，第一次随机选择0号分区，当批次满了(默认16k)，
+
+     或linger.ms时间到，再随机选择下一个分区(与上次分区不同)
+
+1. broker启动最好用ip，否则出现了外网访问生产主题用ip，在broker上用机器名消费不到
